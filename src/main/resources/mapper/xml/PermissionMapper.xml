@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.Permission">
+    <id column="perid" jdbcType="INTEGER" property="perid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="parentid" jdbcType="INTEGER" property="parentid" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="isparent" jdbcType="INTEGER" property="isparent" />
+    <result column="ismenu" jdbcType="INTEGER" property="ismenu" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    perid, pname, parentid, url, isparent, ismenu
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.PermissionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where perid = #{perid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from permission
+    where perid = #{perid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.PermissionExample">
+    delete from permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.Permission">
+    insert into permission (perid, pname, parentid, 
+      url, isparent, ismenu
+      )
+    values (#{perid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
+      #{url,jdbcType=VARCHAR}, #{isparent,jdbcType=INTEGER}, #{ismenu,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.Permission">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="perid != null">
+        perid,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="parentid != null">
+        parentid,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="isparent != null">
+        isparent,
+      </if>
+      <if test="ismenu != null">
+        ismenu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="perid != null">
+        #{perid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isparent != null">
+        #{isparent,jdbcType=INTEGER},
+      </if>
+      <if test="ismenu != null">
+        #{ismenu,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.pojo.PermissionExample" resultType="java.lang.Long">
+    select count(*) from permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update permission
+    <set>
+      <if test="record.perid != null">
+        perid = #{record.perid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pname != null">
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null">
+        parentid = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isparent != null">
+        isparent = #{record.isparent,jdbcType=INTEGER},
+      </if>
+      <if test="record.ismenu != null">
+        ismenu = #{record.ismenu,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update permission
+    set perid = #{record.perid,jdbcType=INTEGER},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      parentid = #{record.parentid,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR},
+      isparent = #{record.isparent,jdbcType=INTEGER},
+      ismenu = #{record.ismenu,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.Permission">
+    update permission
+    <set>
+      <if test="pname != null">
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        parentid = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isparent != null">
+        isparent = #{isparent,jdbcType=INTEGER},
+      </if>
+      <if test="ismenu != null">
+        ismenu = #{ismenu,jdbcType=INTEGER},
+      </if>
+    </set>
+    where perid = #{perid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.Permission">
+    update permission
+    set pname = #{pname,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      isparent = #{isparent,jdbcType=INTEGER},
+      ismenu = #{ismenu,jdbcType=INTEGER}
+    where perid = #{perid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectRolePermission" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	SELECT * from permission where perid in
+  	(SELECT perid from rolepermission where role_id=#{roleId})
+  </select>
+</mapper>

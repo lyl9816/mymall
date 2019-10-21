@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+ body{padding: 20px;}
+  .demo-input{padding-left: 10px; height: 38px; min-width: 262px; line-height: 38px; border: 1px solid #e6e6e6;  background-color: #fff;  border-radius: 2px;}
+  .demo-footer{padding: 50px 0; color: #999; font-size: 14px;}
+  .demo-footer a{padding: 0 5px; color: #01AAED;}

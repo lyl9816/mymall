@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.ReceiptInfoMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.ReceiptInfo">
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="o_id" jdbcType="VARCHAR" property="oId" />
+    <result column="o_name" jdbcType="VARCHAR" property="oName" />
+    <result column="o_phone" jdbcType="VARCHAR" property="oPhone" />
+    <result column="o_address" jdbcType="VARCHAR" property="oAddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    r_id, o_id, o_name, o_phone, o_address
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.ReceiptInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from receiptinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from receiptinfo
+    where r_id = #{rId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from receiptinfo
+    where r_id = #{rId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.ReceiptInfoExample">
+    delete from receiptinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.ReceiptInfo">
+    insert into receiptinfo (r_id, o_id, o_name, 
+      o_phone, o_address)
+    values (#{rId,jdbcType=INTEGER}, #{oId,jdbcType=VARCHAR}, #{oName,jdbcType=VARCHAR}, 
+      #{oPhone,jdbcType=VARCHAR}, #{oAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.ReceiptInfo">
+    insert into receiptinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="oName != null">
+        o_name,
+      </if>
+      <if test="oPhone != null">
+        o_phone,
+      </if>
+      <if test="oAddress != null">
+        o_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        #{rId,jdbcType=INTEGER},
+      </if>
+      <if test="oId != null">
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="oName != null">
+        #{oName,jdbcType=VARCHAR},
+      </if>
+      <if test="oPhone != null">
+        #{oPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="oAddress != null">
+        #{oAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.pojo.ReceiptInfoExample" resultType="java.lang.Long">
+    select count(*) from receiptinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update receiptinfo
+    <set>
+      <if test="record.rId != null">
+        r_id = #{record.rId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oId != null">
+        o_id = #{record.oId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oName != null">
+        o_name = #{record.oName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oPhone != null">
+        o_phone = #{record.oPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oAddress != null">
+        o_address = #{record.oAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update receiptinfo
+    set r_id = #{record.rId,jdbcType=INTEGER},
+      o_id = #{record.oId,jdbcType=VARCHAR},
+      o_name = #{record.oName,jdbcType=VARCHAR},
+      o_phone = #{record.oPhone,jdbcType=VARCHAR},
+      o_address = #{record.oAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.ReceiptInfo">
+    update receiptinfo
+    <set>
+      <if test="oId != null">
+        o_id = #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="oName != null">
+        o_name = #{oName,jdbcType=VARCHAR},
+      </if>
+      <if test="oPhone != null">
+        o_phone = #{oPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="oAddress != null">
+        o_address = #{oAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.ReceiptInfo">
+    update receiptinfo
+    set o_id = #{oId,jdbcType=VARCHAR},
+      o_name = #{oName,jdbcType=VARCHAR},
+      o_phone = #{oPhone,jdbcType=VARCHAR},
+      o_address = #{oAddress,jdbcType=VARCHAR}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+</mapper>

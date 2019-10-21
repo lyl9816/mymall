@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.SnackInfoMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.SnackInfo">
+    <id column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="s_batch" jdbcType="VARCHAR" property="sBatch" />
+    <result column="s_name" jdbcType="VARCHAR" property="sName" />
+    <result column="s_price" jdbcType="DOUBLE" property="sPrice" />
+    <result column="s_discount" jdbcType="VARCHAR" property="sDiscount" />
+    <result column="s_pictureUrl" jdbcType="VARCHAR" property="sPictureurl" />
+    <result column="s_brand" jdbcType="VARCHAR" property="sBrand" />
+    <result column="s_place" jdbcType="VARCHAR" property="sPlace" />
+    <result column="s_Imported" jdbcType="INTEGER" property="sImported" />
+    <result column="s_score" jdbcType="INTEGER" property="sScore" />
+    <result column="s_pDate" jdbcType="DATE" property="sPdate" />
+    <result column="s_qDate" jdbcType="VARCHAR" property="sQdate" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="s_createDate" jdbcType="DATE" property="sCreatedate" />
+    <result column="s_dese" jdbcType="VARCHAR" property="sDese" />
+    <result column="s_type" jdbcType="VARCHAR" property="sType" />
+    <result column="s_number" jdbcType="INTEGER" property="sNumber" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    s_id, s_batch, s_name, s_price, s_discount, s_pictureUrl, s_brand, s_place, s_Imported, 
+    s_score, s_pDate, s_qDate, state, s_createDate, s_dese, s_type, s_number
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.SnackInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from snackinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from snackinfo
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from snackinfo
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.SnackInfoExample">
+    delete from snackinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.SnackInfo">
+    insert into snackinfo (s_id, s_batch, s_name, 
+      s_price, s_discount, s_pictureUrl, 
+      s_brand, s_place, s_Imported, 
+      s_score, s_pDate, s_qDate, 
+      state, s_createDate, s_dese, 
+      s_type, s_number)
+    values (#{sId,jdbcType=INTEGER}, #{sBatch,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, 
+      #{sPrice,jdbcType=DOUBLE}, #{sDiscount,jdbcType=VARCHAR}, #{sPictureurl,jdbcType=VARCHAR}, 
+      #{sBrand,jdbcType=VARCHAR}, #{sPlace,jdbcType=VARCHAR}, #{sImported,jdbcType=INTEGER}, 
+      #{sScore,jdbcType=INTEGER}, #{sPdate,jdbcType=DATE}, #{sQdate,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{sCreatedate,jdbcType=DATE}, #{sDese,jdbcType=VARCHAR}, 
+      #{sType,jdbcType=VARCHAR}, #{sNumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.SnackInfo">
+    insert into snackinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        s_id,
+      </if>
+      <if test="sBatch != null">
+        s_batch,
+      </if>
+      <if test="sName != null">
+        s_name,
+      </if>
+      <if test="sPrice != null">
+        s_price,
+      </if>
+      <if test="sDiscount != null">
+        s_discount,
+      </if>
+      <if test="sPictureurl != null">
+        s_pictureUrl,
+      </if>
+      <if test="sBrand != null">
+        s_brand,
+      </if>
+      <if test="sPlace != null">
+        s_place,
+      </if>
+      <if test="sImported != null">
+        s_Imported,
+      </if>
+      <if test="sScore != null">
+        s_score,
+      </if>
+      <if test="sPdate != null">
+        s_pDate,
+      </if>
+      <if test="sQdate != null">
+        s_qDate,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="sCreatedate != null">
+        s_createDate,
+      </if>
+      <if test="sDese != null">
+        s_dese,
+      </if>
+      <if test="sType != null">
+        s_type,
+      </if>
+      <if test="sNumber != null">
+        s_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="sBatch != null">
+        #{sBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sPrice != null">
+        #{sPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="sDiscount != null">
+        #{sDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="sPictureurl != null">
+        #{sPictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sBrand != null">
+        #{sBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="sPlace != null">
+        #{sPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="sImported != null">
+        #{sImported,jdbcType=INTEGER},
+      </if>
+      <if test="sScore != null">
+        #{sScore,jdbcType=INTEGER},
+      </if>
+      <if test="sPdate != null">
+        #{sPdate,jdbcType=DATE},
+      </if>
+      <if test="sQdate != null">
+        #{sQdate,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="sCreatedate != null">
+        #{sCreatedate,jdbcType=DATE},
+      </if>
+      <if test="sDese != null">
+        #{sDese,jdbcType=VARCHAR},
+      </if>
+      <if test="sType != null">
+        #{sType,jdbcType=VARCHAR},
+      </if>
+      <if test="sNumber != null">
+        #{sNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.pojo.SnackInfoExample" resultType="java.lang.Long">
+    select count(*) from snackinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update snackinfo
+    <set>
+      <if test="record.sId != null">
+        s_id = #{record.sId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sBatch != null">
+        s_batch = #{record.sBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sName != null">
+        s_name = #{record.sName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sPrice != null">
+        s_price = #{record.sPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sDiscount != null">
+        s_discount = #{record.sDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sPictureurl != null">
+        s_pictureUrl = #{record.sPictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sBrand != null">
+        s_brand = #{record.sBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sPlace != null">
+        s_place = #{record.sPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sImported != null">
+        s_Imported = #{record.sImported,jdbcType=INTEGER},
+      </if>
+      <if test="record.sScore != null">
+        s_score = #{record.sScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.sPdate != null">
+        s_pDate = #{record.sPdate,jdbcType=DATE},
+      </if>
+      <if test="record.sQdate != null">
+        s_qDate = #{record.sQdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.sCreatedate != null">
+        s_createDate = #{record.sCreatedate,jdbcType=DATE},
+      </if>
+      <if test="record.sDese != null">
+        s_dese = #{record.sDese,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sType != null">
+        s_type = #{record.sType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sNumber != null">
+        s_number = #{record.sNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update snackinfo
+    set s_id = #{record.sId,jdbcType=INTEGER},
+      s_batch = #{record.sBatch,jdbcType=VARCHAR},
+      s_name = #{record.sName,jdbcType=VARCHAR},
+      s_price = #{record.sPrice,jdbcType=DOUBLE},
+      s_discount = #{record.sDiscount,jdbcType=VARCHAR},
+      s_pictureUrl = #{record.sPictureurl,jdbcType=VARCHAR},
+      s_brand = #{record.sBrand,jdbcType=VARCHAR},
+      s_place = #{record.sPlace,jdbcType=VARCHAR},
+      s_Imported = #{record.sImported,jdbcType=INTEGER},
+      s_score = #{record.sScore,jdbcType=INTEGER},
+      s_pDate = #{record.sPdate,jdbcType=DATE},
+      s_qDate = #{record.sQdate,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      s_createDate = #{record.sCreatedate,jdbcType=DATE},
+      s_dese = #{record.sDese,jdbcType=VARCHAR},
+      s_type = #{record.sType,jdbcType=VARCHAR},
+      s_number = #{record.sNumber,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.SnackInfo">
+    update snackinfo
+    <set>
+      <if test="sBatch != null">
+        s_batch = #{sBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        s_name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sPrice != null">
+        s_price = #{sPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="sDiscount != null">
+        s_discount = #{sDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="sPictureurl != null">
+        s_pictureUrl = #{sPictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sBrand != null">
+        s_brand = #{sBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="sPlace != null">
+        s_place = #{sPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="sImported != null">
+        s_Imported = #{sImported,jdbcType=INTEGER},
+      </if>
+      <if test="sScore != null">
+        s_score = #{sScore,jdbcType=INTEGER},
+      </if>
+      <if test="sPdate != null">
+        s_pDate = #{sPdate,jdbcType=DATE},
+      </if>
+      <if test="sQdate != null">
+        s_qDate = #{sQdate,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="sCreatedate != null">
+        s_createDate = #{sCreatedate,jdbcType=DATE},
+      </if>
+      <if test="sDese != null">
+        s_dese = #{sDese,jdbcType=VARCHAR},
+      </if>
+      <if test="sType != null">
+        s_type = #{sType,jdbcType=VARCHAR},
+      </if>
+      <if test="sNumber != null">
+        s_number = #{sNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.SnackInfo">
+    update snackinfo
+    set s_batch = #{sBatch,jdbcType=VARCHAR},
+      s_name = #{sName,jdbcType=VARCHAR},
+      s_price = #{sPrice,jdbcType=DOUBLE},
+      s_discount = #{sDiscount,jdbcType=VARCHAR},
+      s_pictureUrl = #{sPictureurl,jdbcType=VARCHAR},
+      s_brand = #{sBrand,jdbcType=VARCHAR},
+      s_place = #{sPlace,jdbcType=VARCHAR},
+      s_Imported = #{sImported,jdbcType=INTEGER},
+      s_score = #{sScore,jdbcType=INTEGER},
+      s_pDate = #{sPdate,jdbcType=DATE},
+      s_qDate = #{sQdate,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      s_createDate = #{sCreatedate,jdbcType=DATE},
+      s_dese = #{sDese,jdbcType=VARCHAR},
+      s_type = #{sType,jdbcType=VARCHAR},
+      s_number = #{sNumber,jdbcType=INTEGER}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+
+<!--  查询热销商品-->
+  <select id="selectHotSnack" resultMap="BaseResultMap" parameterType="map">
+    select snackinfo.*,sum(recordNumber) as xl
+	from record,snackinfo
+	where record.s_id=snackinfo.s_id  and snackinfo.state=1
+	and recordDate BETWEEN #{firstday} and #{lastday}
+	GROUP BY s_id  ORDER BY xl DESC  LIMIT 10
+  </select>
+<!--  查询最新商品-->
+  <select id="selectNewSnack" resultMap="BaseResultMap">
+     select * from snackinfo  ORDER  BY s_createDate desc LIMIT 10
+  </select>
+<!--查询分类商品-->
+  <select id="selectPuffing" resultMap="BaseResultMap" resultType="map">
+    SELECT * from snackinfo
+    <where>
+      <if test="typeName !=null and typeName !=''">
+        s_type=#{typeName}
+      </if>
+      <if test="sImported !=null and sImported !=''">
+        and s_Imported=#{sImported}
+      </if>
+      <if test="snackName !=null and snackName !=''">
+        and s_name like "%"#{snackName}"%"
+      </if>
+    </where>
+    ORDER  BY s_createDate desc LIMIT 20
+  </select>
+<!--查询已选商品-->
+  <select id="selectOrderSnack" resultType="com.snack.pojo.domain.DoSnack" parameterType="map">
+    select o.d_id as dId,o.o_num as oNum,o_money as oMoney,s.s_pictureUrl as picUrl,s.s_name as sName
+	from orderdetail o INNER JOIN snackinfo s on o.s_id=s.s_id
+	where o.o_id=#{oId} LIMIT #{pageStart},#{pageSize}
+  </select>
+
+  <select id="selectAdminSnackLimit" resultMap="BaseResultMap" parameterType="map">
+    select * from snackinfo o
+    <where>
+      <if test="sType != null and sType != '' ">
+        o.s_type = #{sType}
+      </if>
+      <if test="sName != null and sName != '' ">
+        and o.s_name like "%"#{sName}"%"
+      </if>
+      <if test="startDate !=null and startDate !='' ">
+        <![CDATA[AND o.s_createdate  >= #{startDate} ]]>
+      </if>
+      <if test="endDate !=null and endDate !='' ">
+        <![CDATA[AND o.s_createdate  <= #{endDate} ]]>
+      </if>
+    </where>
+    ORDER BY o.s_createdate DESC
+    LIMIT #{pageStart},#{pageSize}
+  </select>
+
+  <select id="selectAdminSnackCount" resultType="java.lang.Integer" parameterType="map">
+    select count(*) from snackinfo o
+    <where>
+      <if test="sType != null and sType != '' ">
+        o.s_type = #{sType}
+      </if>
+      <if test="sName != null and sName != '' ">
+        and o.s_name like "%"#{sName}"%"
+      </if>
+      <if test="startDate !=null and startDate !='' ">
+        <![CDATA[AND o.s_createdate  >= #{startDate} ]]>
+      </if>
+      <if test="endDate !=null and endDate !='' ">
+        <![CDATA[AND o.s_createdate  <= #{endDate} ]]>
+      </if>
+    </where>
+  </select>
+</mapper>

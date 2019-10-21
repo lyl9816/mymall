@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.AccountMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.Account">
+    <id column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="m_time" jdbcType="DATE" property="mTime" />
+    <result column="m_type" jdbcType="VARCHAR" property="mType" />
+    <result column="m_amoney" jdbcType="VARCHAR" property="mAmoney" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    m_id, u_id, m_time, m_type, m_amoney
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.AccountExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from account
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.AccountExample">
+    delete from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.Account">
+    insert into account (m_id, u_id, m_time, 
+      m_type, m_amoney)
+    values (#{mId,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{mTime,jdbcType=DATE}, 
+      #{mType,jdbcType=VARCHAR}, #{mAmoney,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.Account">
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        m_id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="mTime != null">
+        m_time,
+      </if>
+      <if test="mType != null">
+        m_type,
+      </if>
+      <if test="mAmoney != null">
+        m_amoney,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="mTime != null">
+        #{mTime,jdbcType=DATE},
+      </if>
+      <if test="mType != null">
+        #{mType,jdbcType=VARCHAR},
+      </if>
+      <if test="mAmoney != null">
+        #{mAmoney,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.pojo.AccountExample" resultType="java.lang.Long">
+    select count(*) from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update account
+    <set>
+      <if test="record.mId != null">
+        m_id = #{record.mId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uId != null">
+        u_id = #{record.uId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mTime != null">
+        m_time = #{record.mTime,jdbcType=DATE},
+      </if>
+      <if test="record.mType != null">
+        m_type = #{record.mType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mAmoney != null">
+        m_amoney = #{record.mAmoney,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update account
+    set m_id = #{record.mId,jdbcType=INTEGER},
+      u_id = #{record.uId,jdbcType=INTEGER},
+      m_time = #{record.mTime,jdbcType=DATE},
+      m_type = #{record.mType,jdbcType=VARCHAR},
+      m_amoney = #{record.mAmoney,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.Account">
+    update account
+    <set>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="mTime != null">
+        m_time = #{mTime,jdbcType=DATE},
+      </if>
+      <if test="mType != null">
+        m_type = #{mType,jdbcType=VARCHAR},
+      </if>
+      <if test="mAmoney != null">
+        m_amoney = #{mAmoney,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.Account">
+    update account
+    set u_id = #{uId,jdbcType=INTEGER},
+      m_time = #{mTime,jdbcType=DATE},
+      m_type = #{mType,jdbcType=VARCHAR},
+      m_amoney = #{mAmoney,jdbcType=VARCHAR}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <select id="selectAccountLimit" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from account
+	where u_id=#{uId} ORDER BY m_time DESC LIMIT #{pageStart},#{pageSize}
+  </select>
+  <select id="selectNum" parameterType="java.lang.Integer"  resultType="java.lang.Integer">
+ 	CALL haha(#{a},#{b})
+  </select>
+</mapper>

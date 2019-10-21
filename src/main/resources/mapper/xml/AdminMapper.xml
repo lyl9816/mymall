@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.Admin">
+    <id column="ad_id" jdbcType="INTEGER" property="adId" />
+    <result column="ad_username" jdbcType="VARCHAR" property="adUsername" />
+    <result column="ad_password" jdbcType="VARCHAR" property="adPassword" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapTwo" type="com.snack.pojo.domain.DoAdmin" >
+    <id column="ad_id" property="adId" jdbcType="INTEGER" />
+    <result column="ad_username" property="adUsername" jdbcType="VARCHAR" />
+    <result column="ad_password" property="adPassword" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_info" property="roleInfo" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ad_id, ad_username, ad_password, role_id
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.AdminExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from admin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.AdminExample">
+    delete from admin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.Admin">
+    insert into admin (ad_id, ad_username, ad_password, 
+      role_id)
+    values (#{adId,jdbcType=INTEGER}, #{adUsername,jdbcType=VARCHAR}, #{adPassword,jdbcType=VARCHAR}, 
+      #{roleId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.Admin">
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        ad_id,
+      </if>
+      <if test="adUsername != null">
+        ad_username,
+      </if>
+      <if test="adPassword != null">
+        ad_password,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="adUsername != null">
+        #{adUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="adPassword != null">
+        #{adPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.pojo.AdminExample" resultType="java.lang.Long">
+    select count(*) from admin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update admin
+    <set>
+      <if test="record.adId != null">
+        ad_id = #{record.adId,jdbcType=INTEGER},
+      </if>
+      <if test="record.adUsername != null">
+        ad_username = #{record.adUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adPassword != null">
+        ad_password = #{record.adPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update admin
+    set ad_id = #{record.adId,jdbcType=INTEGER},
+      ad_username = #{record.adUsername,jdbcType=VARCHAR},
+      ad_password = #{record.adPassword,jdbcType=VARCHAR},
+      role_id = #{record.roleId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.Admin">
+    update admin
+    <set>
+      <if test="adUsername != null">
+        ad_username = #{adUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="adPassword != null">
+        ad_password = #{adPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.Admin">
+    update admin
+    set ad_username = #{adUsername,jdbcType=VARCHAR},
+      ad_password = #{adPassword,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER}
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAdminLimit" resultMap="BaseResultMapTwo" parameterType="java.util.Map">
+    select *
+    from admin a
+    INNER JOIN role r on a.role_id=r.role_id
+    <where>
+      <if test="admin!=null">
+        <if test="admin.adUsername!=null and admin.adUsername!='' ">
+        and a.ad_username=#{admin.adUsername}
+      </if>
+        <if test="admin.roleName!=null  and admin.roleName!='' ">
+          and r.role_name=#{admin.roleName}
+        </if>
+      </if>
+    </where>
+    ORDER BY a.ad_id
+    LIMIT #{pageStart},#{pageSize}
+  </select>
+  <select id="countAdminLimit" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from admin a INNER JOIN role r on a.role_id=r.role_id
+    <where>
+      <if test="admin!=null">
+        <if test="admin.adUsername!=null and admin.adUsername!='' ">
+          and a.ad_username=#{admin.adUsername}
+        </if>
+        <if test="admin.roleName!=null  and admin.roleName!='' ">
+          and r.role_name=#{admin.roleName}
+        </if>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectAdminByOne" resultMap="BaseResultMapTwo" parameterType="java.lang.Integer">
+  	select * from admin a INNER JOIN role r on a.role_id=r.role_id
+		where a.ad_id=#{adId}
+  </select>
+  <select id="selectAdminByName" resultMap="BaseResultMapTwo" parameterType="string">
+  	select * from admin a INNER JOIN role r on a.role_id=r.role_id
+		where a.ad_username=#{adminName}
+  </select>
+  <update id="updateAdminInfo" parameterType="com.snack.pojo.domain.DoAdminInfo">
+  	UPDATE `admin` SET ad_username=#{adUsername},ad_password=#{adPassword},role_id =#{roleId}
+  	WHERE ad_id=#{adId}
+  </update>
+</mapper>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.UserInfo">
+    <id column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="u_realname" jdbcType="VARCHAR" property="uRealname" />
+    <result column="u_username" jdbcType="VARCHAR" property="uUsername" />
+    <result column="u_password" jdbcType="VARCHAR" property="uPassword" />
+    <result column="u_money" jdbcType="VARCHAR" property="uMoney" />
+    <result column="u_phone" jdbcType="VARCHAR" property="uPhone" />
+    <result column="u_email" jdbcType="VARCHAR" property="uEmail" />
+    <result column="u_sex" jdbcType="CHAR" property="uSex" />
+    <result column="u_resgistDate" jdbcType="DATE" property="uResgistdate" />
+    <result column="u_address" jdbcType="VARCHAR" property="uAddress" />
+    <result column="u_score" jdbcType="INTEGER" property="uScore" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    u_id, u_realname, u_username, u_password, u_money, u_phone, u_email, u_sex, u_resgistDate, 
+    u_address, u_score
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.UserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where u_id = #{uId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from userinfo
+    where u_id = #{uId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.UserInfoExample">
+    delete from userinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.UserInfo">
+    insert into userinfo (u_id, u_realname, u_username, 
+      u_password, u_money, u_phone, 
+      u_email, u_sex, u_resgistDate, 
+      u_address, u_score)
+    values (#{uId,jdbcType=INTEGER}, #{uRealname,jdbcType=VARCHAR}, #{uUsername,jdbcType=VARCHAR}, 
+      #{uPassword,jdbcType=VARCHAR}, #{uMoney,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, 
+      #{uEmail,jdbcType=VARCHAR}, #{uSex,jdbcType=CHAR}, #{uResgistdate,jdbcType=DATE}, 
+      #{uAddress,jdbcType=VARCHAR}, #{uScore,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.UserInfo">
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="uRealname != null">
+        u_realname,
+      </if>
+      <if test="uUsername != null">
+        u_username,
+      </if>
+      <if test="uPassword != null">
+        u_password,
+      </if>
+      <if test="uMoney != null">
+        u_money,
+      </if>
+      <if test="uPhone != null">
+        u_phone,
+      </if>
+      <if test="uEmail != null">
+        u_email,
+      </if>
+      <if test="uSex != null">
+        u_sex,
+      </if>
+      <if test="uResgistdate != null">
+        u_resgistDate,
+      </if>
+      <if test="uAddress != null">
+        u_address,
+      </if>
+      <if test="uScore != null">
+        u_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="uRealname != null">
+        #{uRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="uUsername != null">
+        #{uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uMoney != null">
+        #{uMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null">
+        #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null">
+        #{uSex,jdbcType=CHAR},
+      </if>
+      <if test="uResgistdate != null">
+        #{uResgistdate,jdbcType=DATE},
+      </if>
+      <if test="uAddress != null">
+        #{uAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="uScore != null">
+        #{uScore,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.pojo.UserInfoExample" resultType="java.lang.Long">
+    select count(*) from userinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update userinfo
+    <set>
+      <if test="record.uId != null">
+        u_id = #{record.uId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uRealname != null">
+        u_realname = #{record.uRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uUsername != null">
+        u_username = #{record.uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPassword != null">
+        u_password = #{record.uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uMoney != null">
+        u_money = #{record.uMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPhone != null">
+        u_phone = #{record.uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uEmail != null">
+        u_email = #{record.uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uSex != null">
+        u_sex = #{record.uSex,jdbcType=CHAR},
+      </if>
+      <if test="record.uResgistdate != null">
+        u_resgistDate = #{record.uResgistdate,jdbcType=DATE},
+      </if>
+      <if test="record.uAddress != null">
+        u_address = #{record.uAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uScore != null">
+        u_score = #{record.uScore,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update userinfo
+    set u_id = #{record.uId,jdbcType=INTEGER},
+      u_realname = #{record.uRealname,jdbcType=VARCHAR},
+      u_username = #{record.uUsername,jdbcType=VARCHAR},
+      u_password = #{record.uPassword,jdbcType=VARCHAR},
+      u_money = #{record.uMoney,jdbcType=VARCHAR},
+      u_phone = #{record.uPhone,jdbcType=VARCHAR},
+      u_email = #{record.uEmail,jdbcType=VARCHAR},
+      u_sex = #{record.uSex,jdbcType=CHAR},
+      u_resgistDate = #{record.uResgistdate,jdbcType=DATE},
+      u_address = #{record.uAddress,jdbcType=VARCHAR},
+      u_score = #{record.uScore,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.UserInfo">
+    update userinfo
+    <set>
+      <if test="uRealname != null">
+        u_realname = #{uRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="uUsername != null">
+        u_username = #{uUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uMoney != null">
+        u_money = #{uMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null">
+        u_phone = #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        u_email = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null">
+        u_sex = #{uSex,jdbcType=CHAR},
+      </if>
+      <if test="uResgistdate != null">
+        u_resgistDate = #{uResgistdate,jdbcType=DATE},
+      </if>
+      <if test="uAddress != null">
+        u_address = #{uAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="uScore != null">
+        u_score = #{uScore,jdbcType=INTEGER},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.UserInfo">
+    update userinfo
+    set u_realname = #{uRealname,jdbcType=VARCHAR},
+      u_username = #{uUsername,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      u_money = #{uMoney,jdbcType=VARCHAR},
+      u_phone = #{uPhone,jdbcType=VARCHAR},
+      u_email = #{uEmail,jdbcType=VARCHAR},
+      u_sex = #{uSex,jdbcType=CHAR},
+      u_resgistDate = #{uResgistdate,jdbcType=DATE},
+      u_address = #{uAddress,jdbcType=VARCHAR},
+      u_score = #{uScore,jdbcType=INTEGER}
+    where u_id = #{uId,jdbcType=INTEGER}
+  </update>
+
+  <!--  登录查询 -->
+  <select id="selectUserLogin" resultMap="BaseResultMap" parameterType="com.snack.pojo.UserInfo">
+    select * from userinfo where u_username=#{uUsername} and u_password=#{uPassword}
+  </select>
+
+<!--    查询用户-->
+  <select id="selectUserOne" resultMap="BaseResultMap" parameterType="com.snack.pojo.UserInfo">
+    select * from userinfo where u_username=#{uUsername}
+  </select>
+
+  <!-- 用户分页 -->
+  <select id="selectUserinfoLimit" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from userinfo u
+    <where>
+      <if test="userinfo.uUsername!=null  and userinfo.uUsername!='' ">
+        and u.u_username=#{userinfo.uUsername}
+      </if>
+      <if test="userinfo.uPhone!=null  and userinfo.uPhone!='' ">
+        and u.u_phone=#{userinfo.uPhone}
+      </if>
+    </where>
+    order BY u.u_resgistDate
+    LIMIT #{pageStart},#{pageSize}
+  </select>
+
+</mapper>

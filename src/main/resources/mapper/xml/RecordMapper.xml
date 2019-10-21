@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.RecordMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.Record">
+    <id column="record_id" jdbcType="INTEGER" property="recordId" />
+    <result column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="recordDate" jdbcType="DATE" property="recorddate" />
+    <result column="recordNumber" jdbcType="INTEGER" property="recordnumber" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    record_id, s_id, recordDate, recordNumber
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.RecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.RecordExample">
+    delete from record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.Record">
+    insert into record (record_id, s_id, recordDate, 
+      recordNumber)
+    values (#{recordId,jdbcType=INTEGER}, #{sId,jdbcType=INTEGER}, #{recorddate,jdbcType=DATE}, 
+      #{recordnumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.Record">
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="sId != null">
+        s_id,
+      </if>
+      <if test="recorddate != null">
+        recordDate,
+      </if>
+      <if test="recordnumber != null">
+        recordNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="recorddate != null">
+        #{recorddate,jdbcType=DATE},
+      </if>
+      <if test="recordnumber != null">
+        #{recordnumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.pojo.RecordExample" resultType="java.lang.Long">
+    select count(*) from record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update record
+    <set>
+      <if test="record.recordId != null">
+        record_id = #{record.recordId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sId != null">
+        s_id = #{record.sId,jdbcType=INTEGER},
+      </if>
+      <if test="record.recorddate != null">
+        recordDate = #{record.recorddate,jdbcType=DATE},
+      </if>
+      <if test="record.recordnumber != null">
+        recordNumber = #{record.recordnumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update record
+    set record_id = #{record.recordId,jdbcType=INTEGER},
+      s_id = #{record.sId,jdbcType=INTEGER},
+      recordDate = #{record.recorddate,jdbcType=DATE},
+      recordNumber = #{record.recordnumber,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.Record">
+    update record
+    <set>
+      <if test="sId != null">
+        s_id = #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="recorddate != null">
+        recordDate = #{recorddate,jdbcType=DATE},
+      </if>
+      <if test="recordnumber != null">
+        recordNumber = #{recordnumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.Record">
+    update record
+    set s_id = #{sId,jdbcType=INTEGER},
+      recordDate = #{recorddate,jdbcType=DATE},
+      recordNumber = #{recordnumber,jdbcType=INTEGER}
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectGroupBytype" parameterType="map" resultType="com.snack.pojo.domain.DoRecord">
+    select sum(r.recordNumber) as value,s.s_type as name
+    from record r INNER JOIN snackinfo s on r.s_id=s.s_id
+    <where>
+      <if test="startDate !=null and startDate !='' ">
+        <![CDATA[AND recordDate  >= #{startDate} ]]>
+      </if>
+      <if test="endDate !=null and endDate !='' ">
+        <![CDATA[AND recordDate  <= #{endDate} ]]>
+      </if>
+    </where>
+    GROUP BY s.s_type
+  </select>
+</mapper>

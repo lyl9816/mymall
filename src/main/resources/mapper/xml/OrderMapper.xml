@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snack.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.snack.pojo.Order">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="o_id" jdbcType="VARCHAR" property="oId" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="e_id" jdbcType="INTEGER" property="eId" />
+    <result column="o_time" jdbcType="DATE" property="oTime" />
+    <result column="o_type" jdbcType="INTEGER" property="oType" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapTwo" type="com.snack.pojo.domain.DoMyOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="o_id" property="oId" jdbcType="VARCHAR" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="e_id" property="eId" jdbcType="INTEGER" />
+    <result column="o_time" property="oTime" jdbcType="DATE" />
+    <result column="o_type" property="oType" jdbcType="INTEGER" />
+    <result column="r_id" property="rId" jdbcType="INTEGER" />
+    <result column="o_name" property="oName" jdbcType="VARCHAR" />
+    <result column="o_phone" property="oPhone" jdbcType="VARCHAR" />
+    <result column="o_address" property="oAddress" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, o_id, u_id, e_id, o_time, o_type
+  </sql>
+  <select id="selectByExample" parameterType="com.snack.pojo.OrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.pojo.OrderExample">
+    delete from order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.pojo.Order">
+    insert into order (id, o_id, u_id, 
+      e_id, o_time, o_type)
+    values (#{id,jdbcType=INTEGER}, #{oId,jdbcType=VARCHAR}, #{uId,jdbcType=INTEGER}, 
+      #{eId,jdbcType=INTEGER}, #{oTime,jdbcType=DATE}, #{oType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.pojo.Order">
+    insert into `order`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="eId != null">
+        e_id,
+      </if>
+      <if test="oTime != null">
+        o_time,
+      </if>
+      <if test="oType != null">
+        o_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oId != null">
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="eId != null">
+        #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="oTime != null">
+        #{oTime,jdbcType=DATE},
+      </if>
+      <if test="oType != null">
+        #{oType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="countByExample" parameterType="com.snack.pojo.OrderExample" resultType="java.lang.Long">
+    select count(*) from `order`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <update id="updateByExampleSelective" parameterType="map">
+    update order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.oId != null">
+        o_id = #{record.oId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uId != null">
+        u_id = #{record.uId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eId != null">
+        e_id = #{record.eId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oTime != null">
+        o_time = #{record.oTime,jdbcType=DATE},
+      </if>
+      <if test="record.oType != null">
+        o_type = #{record.oType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update order
+    set id = #{record.id,jdbcType=INTEGER},
+      o_id = #{record.oId,jdbcType=VARCHAR},
+      u_id = #{record.uId,jdbcType=INTEGER},
+      e_id = #{record.eId,jdbcType=INTEGER},
+      o_time = #{record.oTime,jdbcType=DATE},
+      o_type = #{record.oType,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.pojo.Order">
+    update `order`
+    <set>
+      <if test="oId != null">
+        o_id = #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="eId != null">
+        e_id = #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="oTime != null">
+        o_time = #{oTime,jdbcType=DATE},
+      </if>
+      <if test="oType != null">
+        o_type = #{oType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.pojo.Order">
+    update order
+    set o_id = #{oId,jdbcType=VARCHAR},
+      u_id = #{uId,jdbcType=INTEGER},
+      e_id = #{eId,jdbcType=INTEGER},
+      o_time = #{oTime,jdbcType=DATE},
+      o_type = #{oType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectMyOrderLimit" resultMap="BaseResultMapTwo" parameterType="java.util.Map">
+  	SELECT * from `order` o INNER JOIN receiptinfo r
+	on o.o_id=r.o_id where o.u_id=#{uId} and o.o_type!=1
+	ORDER BY o.o_time and o.o_type=0 DESC LIMIT #{pageStart},#{pageSize}
+  </select>
+  <select id="selectMySuccessOrderLimit" resultMap="BaseResultMapTwo" parameterType="java.util.Map">
+  	SELECT * from `order` o INNER JOIN receiptinfo r
+	on o.o_id=r.o_id where o.u_id=#{uId} and o.o_type=1
+	ORDER BY o.o_time DESC LIMIT #{pageStart},#{pageSize}
+  </select>
+  <select id="selectAdminOrderLimit" resultType="com.snack.pojo.domain.DoAdminOrder" parameterType="java.util.Map">
+    SELECT id ,o.o_id AS oId,o.u_id as uId,o.e_id as eId,
+    o.o_time as oTime,o.o_type as oType, r.r_id as rId,
+    r.o_name as oName,r.o_phone as oPhone ,r.o_address as oAddress,
+    a.ad_id as adId,a.ad_username as adUsername,u.u_username as uUsername
+    from `order` o INNER JOIN receiptinfo r on o.o_id=r.o_id
+    LEFT JOIN admin a on a.ad_id=o.e_id
+    LEFT JOIN userinfo  u on u.u_id=o.u_id
+    <where>
+      <if test="oId != null and oId != '' ">
+        and o.o_id=#{oId}
+      </if>
+      <if test="startDate !=null and startDate !='' ">
+        <![CDATA[AND o.start_date  >= #{startDate} ]]>
+      </if>
+      <if test="oTimeEnd !=null and oTimeEnd !='' ">
+        <![CDATA[AND o.o_time  <= #{oTimeEnd} ]]>
+      </if>
+      <if test="adUserName != '' ">
+        and a.ad_username=#{adUserName}
+      </if>
+    </where>
+    ORDER BY o_type ,o.o_time  DESC LIMIT #{pageStart},#{pageSize}
+  </select>
+  <select id="countAdminOrder"  parameterType="java.util.Map" resultType="java.lang.Integer" >
+    SELECT count(*)
+    from `order` o INNER JOIN receiptinfo r on o.o_id=r.o_id
+    LEFT JOIN admin a on a.ad_id=o.e_id
+    <where>
+      <if test="oId != null and oId != '' ">
+        and o.o_id=#{oId}
+      </if>
+      <if test="oTimeStart !=null and oTimeStart !='' ">
+        <![CDATA[AND o.o_time  >= #{oTimeStart} ]]>
+      </if>
+      <if test="oTimeEnd !=null and oTimeEnd !='' ">
+        <![CDATA[AND o.o_time  <= #{oTimeEnd} ]]>
+      </if>
+      <if test="adUserName != '' ">
+        and a.ad_username=#{adUserName}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteAdminOrder" parameterType="java.lang.String" >
+		DELETE o,od,ri FROM `order` o LEFT JOIN orderdetail od on o.o_id=od.o_id
+		LEFT JOIN  receiptinfo ri on ri.o_id = o.o_id
+		where o.o_id=#{oId}
+	  </delete>
+  <update id="updateOrderByoId" parameterType="java.lang.String">
+		UPDATE `order` SET o_type=-2 where o_id=#{oId}
+	</update>
+  <select id="selectPushSnackNum" parameterType="java.lang.Integer" resultType="com.snack.pojo.OrderDetail">
+		SELECT d_id as dId, o_Id as oId, s_id as sId, o_num as oNum ,o_money AS oMoney
+		from orderdetail  where o_id  in(
+		SELECT o_id from `order` where id=#{id});
+
+	</select>
+</mapper>
